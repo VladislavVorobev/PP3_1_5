@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="ISO-8859-1">
+    <title>Users</title>
+</head>
+<body>
+<form th:action="@{/appLogout}" method="POST">
+    <input type="submit" value="Logout"/>
+</form>
+<h1> Hello I'm AdminPage</h1>
+<div align="center">
+    <h2>Users table</h2>
+    <table>
+       <b> <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Action</th>
+       </tr></b>
+    <br>
+        <tr th:each="u : ${users}">
+            <td th:utext="${u.id}"></td>
+            <td th:utext="${u.username}"></td>
+            <td th:utext="${u.name}"></td>
+            <td th:utext="${u.surname}"></td>
+            <td th:utext="${u.email}"></td>
+            <td th:utext="${u.password}"></td>
+            <td th:utext="${u.role}"></td>
+            <td>
+
+                <a th:href="@{/admin/{id}/edit(id=${u.getId()})}">Edit</a>
+                <a th:href="@{/admin/delete/{id}(id=${u.getId()})}">Delete</a>
+                <br>
+            </td>
+        </tr>
+        </table>
+
+    <br>
+    <a href="/user" style="float: left">Enter your userpage</a>
+    <br>
+    <a href="/admin/new" style="float: left">Add new user</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>New User</title>
+</head>
+<body>
+<form th:action="@{/appLogout}" method="POST">
+    <input type="submit" value="Logout"/>
+</form>
+<div align="center">
+    <h2>New User</h2>
+    <form method="POST" th:action="@{/admin/new}" th:object="${user}">
+            <p>
+                <label th:for="firstName">Name: </label>
+                <input type="text" name="name" th:id="firstName" th:value="${user.getName()}">
+            </p>
+            <p>
+                <label th:for="lastName">Surname:</label>
+                <input type="text" name="surname" th:id="lastName" th:value="${user.getSurname()}">
+            </p>
+            <p>
+                <label th:for="email">Email: </label>
+                <input type="text" name="email" th:id="email" th:value="${user.getEmail()}">
+            </p>
+            <p>
+                <label th:for="username">Username: </label>
+                <input type="text" name="username" th:id="username" th:value="${user.getUsername()}">
+            </p>
+            <p>
+                <label th:for="password">Password: </label>
+                <input type="text" name="password" th:id="password" th:value="${user.getPassword()}">
+            </p>
+            <p>
+                <label>Role: </label>
+            <div class="checkbox-container" th:each="roles : ${roles}">
+                <label>
+                    <input type="checkbox" th:name="ids" th:value="${roles.id}" th:id="${'role'+roles.id}" />
+                </label>
+                <label  th:for="${'role'+roles.id}" th:text="${roles.name}"></label>
+            </div>
+            </p>
+        <button type="submit">Save</button>
+    </form>
+    <br/>
+</div>
+</body>
+</html>
