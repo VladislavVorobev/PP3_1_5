@@ -41,8 +41,8 @@ public class Init {
             e.printStackTrace();
         }
 
-        Role adminRole = roleService.getRoleById(1L); // Предполагается, что роль администратора имеет ID 2
-        Role userRole = roleService.getRoleById(2L); // Предполагается, что роль пользователя имеет ID 1
+        Role adminRole = roleService.getRoleById(1L);
+        Role userRole = roleService.getRoleById(2L);
 
         Set<Role> adminRoleSet = Stream.of(adminRole).collect(Collectors.toSet());
         Set<Role> userRoleSet = Stream.of(userRole).collect(Collectors.toSet());
