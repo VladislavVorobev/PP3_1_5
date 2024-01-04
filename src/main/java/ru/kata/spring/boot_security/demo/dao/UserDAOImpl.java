@@ -44,8 +44,8 @@ public class UserDAOImpl implements UserDAO {
 
 
     public User findByUsername(String username) {
-        return (User) entityManager.createNativeQuery("SELECT * FROM users u WHERE u.username = ?", User.class)
-                .setParameter(1, username)
+        return entityManager.createQuery("SELECT DISTINCT u FROM User u JOIN FETCH u.roles WHERE u.username = :username", User.class)
+                .setParameter("username", username)
                 .getSingleResult();
     }
 }
