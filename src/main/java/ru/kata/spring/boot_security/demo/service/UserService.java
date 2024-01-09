@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.kata.spring.boot_security.demo.models.User;
 
@@ -12,5 +13,6 @@ public interface UserService extends UserDetailsService {
     void updateUser(User user);
     List<User> getUserTable();
     User findUser(Long id);
+    UserDetails loadUserByUsername(String username);
 
 }
