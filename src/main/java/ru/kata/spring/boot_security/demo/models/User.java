@@ -4,7 +4,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -16,14 +21,21 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Name is required")
+    @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "Name should start with an uppercase letter and not contain numbers")
     private String name;
 
+    @NotBlank(message = "Surname is required")
+    @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "Surname should start with an uppercase letter and not contain numbers")
     private String surname;
 
+    @Email(message = "Invalid email format")
     private String email;
 
+    @NotBlank(message = "Username is required")
     private String username;
 
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
 
@@ -130,5 +142,18 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.getRole();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, username, password, roles);
     }
 }
