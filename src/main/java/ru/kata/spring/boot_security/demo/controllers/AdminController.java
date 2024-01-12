@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -41,11 +43,15 @@ public class AdminController {
     }
 
     @PostMapping("/admin/new")
-    public String create(@ModelAttribute("user") User user, Model model, @RequestParam(value = "ids") List<Long> ids) {
-        Set<Role> role = roleService.getAllRolesById(ids);
-        user.setRole(role);
-        userService.addUser(user);
-        return REDIRECT_ADMIN;
+    public String create(@Valid @ModelAttribute("user") User user, Model model, BindingResult bindingResult, @RequestParam(value = "ids") List<Long> ids) {
+        if (bindingResult.hasErrors()) {
+            return "error";
+        }
+            Set<Role> role = roleService.getAllRolesById(ids);
+            user.setRole(role);
+            userService.addUser(user);
+            return REDIRECT_ADMIN;
+
     }
 
     @GetMapping("/admin/{id}/edit")
