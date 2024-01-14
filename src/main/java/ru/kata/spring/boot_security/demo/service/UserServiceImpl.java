@@ -56,10 +56,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = Optional.ofNullable(userDAO.findByUsername(username));
+        List<User> userList = userDAO.findByUsername(username);
 
-        if (user.isPresent()) {
-            return user.get();
+        if (!userList.isEmpty()) {
+            return userList.get(0);
         } else {
             throw new UsernameNotFoundException(String.format("User %s not found", username));
         }
