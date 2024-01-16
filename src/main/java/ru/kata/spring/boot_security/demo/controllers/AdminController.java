@@ -43,15 +43,16 @@ public class AdminController {
     }
 
     @PostMapping("/admin/new")
-    public String create(@Valid @ModelAttribute("user") User user, Model model, BindingResult bindingResult, @RequestParam(value = "ids") List<Long> ids) {
+    public String create(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, @RequestParam(value = "ids") List<Long> ids) {
         if (bindingResult.hasErrors()) {
-            return "error";
-        }
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "new";
+        } else {
             Set<Role> role = roleService.getAllRolesById(ids);
             user.setRole(role);
             userService.addUser(user);
             return REDIRECT_ADMIN;
-
+        }
     }
 
     @GetMapping("/admin/{id}/edit")

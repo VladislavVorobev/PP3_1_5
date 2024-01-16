@@ -40,7 +40,7 @@ public class Init {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+/*
         Role adminRole = roleService.getRoleById(1L);
         Role userRole = roleService.getRoleById(2L);
 
@@ -54,6 +54,11 @@ public class Init {
 
         userService.addUser(user1);
         userService.addUser(user2);
+
+ */
+
+
     }
 
 }
+
