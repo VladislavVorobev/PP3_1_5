@@ -40,7 +40,7 @@ public class User implements UserDetails {
     private String password;
 
 
-    @ManyToMany(fetch =FetchType.EAGER)
+    @ManyToMany(fetch =FetchType.LAZY)
     @BatchSize(size = 10)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),

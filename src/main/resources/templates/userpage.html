@@ -31,7 +31,6 @@
             <th>Name</th>
             <th>Surname</th>
             <th>Email</th>
-            <th>Password</th>
             <th>Role</th>
         </tr>
         <tr>
@@ -40,10 +39,23 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.surname}"></td>
             <td th:text="${user.email}"></td>
-            <td th:text="${user.password}"></td>
             <td th:text="${user.role}"></td>
         </tr>
     </table>
+    <script>
+        // Check if the referrer URL contains "/adminpage"
+        if (document.referrer.includes("/admin")) {
+            // Create a button element
+            var backButton = document.createElement("button");
+            backButton.innerHTML = "Go back to AdminPage";
+            backButton.onclick = function() {
+                window.location.href = "/admin";
+            };
+
+            // Append the button to the container div
+            document.querySelector(".container").appendChild(backButton);
+        }
+    </script>
 </div>
 
 </body>
