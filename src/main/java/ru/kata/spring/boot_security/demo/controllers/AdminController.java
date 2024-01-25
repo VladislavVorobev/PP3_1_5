@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@RequestMapping({"/admin"})
 public class AdminController {
     private static final String REDIRECT_ADMIN = "redirect:/admin";
 
@@ -28,11 +29,12 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin")
-    public String showUsers(Model model) {
+    @GetMapping
+    public String showUsers(Model model,@AuthenticationPrincipal  User user) {
+        model.addAttribute("user", user);
         model.addAttribute("users", userService.getUserTable());
         model.addAttribute("roles", roleService.getAllRoles());
-        return "adminpage";
+        return "Adminp";
     }
 
     @GetMapping("/admin/new")
@@ -42,11 +44,11 @@ public class AdminController {
         return "new";
     }
 
-    @PostMapping("/admin/new")
+    @PostMapping("/new")
     public String create(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, @RequestParam(value = "ids") List<Long> ids) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("roles", roleService.getAllRoles());
-            return "new";
+            return "/new";
         } else {
             Set<Role> role = roleService.getAllRolesById(ids);
             user.setRole(role);
@@ -55,14 +57,14 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/admin/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") long id) {
+    @GetMapping("/{id}/edit")
+    public String editUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.findUser(id));
         model.addAttribute("roles", roleService.getAllRoles());
-        return "edit";
+        return REDIRECT_ADMIN;
     }
 
-    @PostMapping("/admin/edit")
+    @PostMapping("/edit/{id}")
     public String update(@ModelAttribute("user") User user, Model model, @RequestParam(value = "ids", required = false) List<Long> ids) {
         Set<Role> role = roleService.getAllRolesById(ids);
         user.setRole(role);
@@ -70,7 +72,7 @@ public class AdminController {
         return REDIRECT_ADMIN;
     }
 
-    @GetMapping("/admin/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.deleteUser(id);
         return REDIRECT_ADMIN;
