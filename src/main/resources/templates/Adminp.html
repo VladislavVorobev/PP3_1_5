@@ -365,12 +365,11 @@
                                                        th:field="*{password}"
                                                        placeholder="Password" required>
                                             </div>
-                                            <label>Role: </label>
-                                        <div class="checkbox-container" th:each="roles : ${roles}">
+                                            <label>Role: </label><div class="checkbox-container" th:each="roles : ${roles}">
                                             <label>
                                                 <input type="checkbox" th:name="ids" th:value="${roles.id}" th:id="${'role'+roles.id}" />
                                             </label>
-                                            <label  th:for="${'role'+roles.id}" th:text="${roles.name}"></label>
+                                            <label  th:for="${'role'+roles.id}" th:text="${roles.name.replace('ROLE_', '')}"></label>
                                         </div>
                                             <input type="submit" class="btn btn-success" value="Add new user"/>
                                         </div>
