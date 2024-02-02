@@ -17,7 +17,6 @@ public class Init {
 
     @Autowired
     public Init(DataSource dataSource) {
-
         this.dataSource = dataSource;
     }
 
@@ -30,8 +29,6 @@ public class Init {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
 
     }
 
