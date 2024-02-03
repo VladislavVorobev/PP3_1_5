@@ -22,6 +22,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
+
+
     @NotBlank(message = "Name is required")
     @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "Name should start with an uppercase letter and not contain numbers")
     private String name;
